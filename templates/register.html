@@ -1,0 +1,45 @@
+<!-- register.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Player Registration</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdn.tailwindcss.com/2.2.19/tailwind.min.css">
+</head>
+<body>
+    <div class="container mx-auto">
+        <h1 class="text-2xl font-bold mb-4">Player Registration</h1>
+        <form class="max-w-md mx-auto" action="{{ url_for('register') }}" method="POST">
+            <div class="mb-4">
+                <label class="block mb-2" for="player_name">Player Name</label>
+                <input class="w-full border border-gray-300 px-4 py-2 rounded-md" type="text" id="player_name" name="player_name" required>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block mb-2" for="potential">Potential</label>
+                    <input class="w-full border border-gray-300 px-4 py-2 rounded-md" type="number" id="potential" name="potential" required>
+                </div>
+                <div>
+                    <label class="block mb-2" for="crossing">Crossing</label>
+                    <input class="w-full border border-gray-300 px-4 py-2 rounded-md" type="number" id="crossing" name="crossing" required>
+                </div>
+                <div>
+                    <label class="block mb-2" for="finishing">Finishing</label>
+                    <input class="w-full border border-gray-300 px-4 py-2 rounded-md" type="number" id="finishing" name="finishing" required>
+                </div>
+                <div>
+                    <label class="block mb-2" for="heading_accuracy">Heading Accuracy</label>
+                    <input class="w-full border border-gray-300 px-4 py-2 rounded-md" type="number" id="heading_accuracy" name="heading_accuracy" required>
+                </div>
+                <!-- Add more input fields for other player attributes following the same pattern -->
+            </div>
+
+            <div class="mt-4">
+                <input class="bg-blue-500 hover:bg-blue-600 text-white font-bold px-4 py-2 rounded-md" type="submit" value="Register">
+            </div>
+        </form>
+    </div>
+</body>
+</html>

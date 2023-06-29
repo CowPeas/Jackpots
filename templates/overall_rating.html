@@ -1,0 +1,64 @@
+<!-- overall_rating.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Overall Rating Calculation</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdn.tailwindcss.com/2.2.19/tailwind.min.css">
+    <script>
+        function calculateOverallRating() {
+            // Retrieve player stats from the form
+            var potential = document.getElementById("potential").value;
+            var crossing = document.getElementById("crossing").value;
+            // Include other attributes in a similar manner
+
+            // Create a data object to send in the request
+            var data = {
+                potential: potential,
+                crossing: crossing,
+                // Include other attributes in a similar manner
+            };
+
+            // Send a POST request to the /overall_rating route
+            fetch("{{ url_for('calculate_overall_rating') }}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Display the overall rating on the page
+                var overallRating = data.overall_rating;
+                document.getElementById("overall_rating").innerText = "Overall Rating: " + overallRating;
+            });
+        }
+    </script>
+</head>
+<body>
+    <div class="container mx-auto">
+        <h1 class="text-2xl font-bold mb-4">Overall Rating Calculation</h1>
+        <form class="max-w-md mx-auto">
+            <div class="mb-4">
+                <label class="block mb-2" for="potential">Potential</label>
+                <input class="w-full border border-gray-300 px-4 py-2 rounded-md" type="number" id="potential" name="potential" required>
+            </div>
+
+            <div class="mb-4">
+                <label class="block mb-2" for="crossing">Crossing</label>
+                <input class="w-full border border-gray-300 px-4 py-2 rounded-md" type="number" id="crossing" name="crossing" required>
+            </div>
+
+            <!-- Include other attributes in a similar manner -->
+
+            <div class="mt-4">
+                <button class="bg-blue-500 hover:bg-blue-600 text-white font-bold px-4 py-2 rounded-md" type="button" onclick="calculateOverallRating()">Calculate Overall Rating</button>
+            </div>
+        </form>
+        <div id="overall_rating" class="mt-4"></div>
+    </div>
+    <script src="{{ url_for('static', filename='visualization.js') }}"></script>
+</body>
+</html>

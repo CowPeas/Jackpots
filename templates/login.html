@@ -1,0 +1,30 @@
+<!-- login.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Player Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdn.tailwindcss.com/2.2.19/tailwind.min.css">
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto p-6">
+        <h1 class="text-3xl font-bold mb-6">Player Login</h1>
+        <form action="{{ url_for('login') }}" method="POST" class="max-w-md mx-auto bg-white rounded-md shadow p-6">
+            <div class="mb-4">
+                <label class="block mb-2" for="username">Username</label>
+                <input class="w-full border border-gray-300 px-4 py-2 rounded-md" type="text" id="username" name="username" required>
+            </div>
+
+            <div class="mb-4">
+                <label class="block mb-2" for="password">Password</label>
+                <input class="w-full border border-gray-300 px-4 py-2 rounded-md" type="password" id="password" name="password" required>
+            </div>
+
+            <div class="mt-6">
+                <button class="bg-blue-500 hover:bg-blue-600 text-white font-bold px-4 py-2 rounded-md" type="submit">Login</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!-- profile_update.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Player Profile Update</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdn.tailwindcss.com/2.2.19/tailwind.min.css">
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto p-6">
+        <h1 class="text-3xl font-bold mb-6">Player Profile Update</h1>
+        <form action="{{ url_for('update_profile') }}" method="POST" class="max-w-md mx-auto bg-white rounded-md shadow p-6">
+            <div class="mb-4">
+                <label class="block mb-2" for="player_name">Player Name</label>
+                <input class="w-full border border-gray-300 px-4 py-2 rounded-md" type="text" id="player_name" name="player_name" value="{{ player.player_name }}" required>
+            </div>
+
+            <div class="mb-4">
+                <label class="block mb-2" for="potential">Potential</label>
+                <input class="w-full border border-gray-300 px-4 py-2 rounded-md" type="number" id="potential" name="potential" value="{{ player.potential }}" required>
+            </div>
+
+            <!-- Include other attributes in a similar manner -->
+
+            <div class="mt-6">
+                <button class="bg-blue-500 hover:bg-blue-600 text-white font-bold px-4 py-2 rounded-md" type="submit">Update</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,51 +1,39 @@
-# Importing the libraries
-import numpy as np
-from sklearn.preprocessing import StandardScaler
-#import matplotlib.pyplot as plt
 import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.ensemble import RandomForestRegressor
 import pickle
 
-dat = pd.read_csv("/home/odin/flask-model/Deployment-flask/jkpot.csv")
+# Load player data
+data = pd.read_csv("/content/player_attributes.csv")
 
-dat.columns = ["H","D","A","TLP","W"]
-X = dat.iloc[:,:4]
-Y = dat.iloc[:,-1]
+# Define relevant columns using 
+player_features = ['potential', 'crossing', 'finishing', 'heading_accuracy', 'short_passing', 'volleys', 'dribbling', 'curve', 'free_kick_accuracy', 'long_passing', 'ball_control', 'acceleration', 'sprint_speed', 'agility', 'reactions', 'balance', 'shot_power', 'jumping', 'stamina', 'strength', 'long_shots', 'aggression', 'interceptions', 'positioning', 'vision', 'penalties', 'marking', 'standing_tackle', 'sliding_tackle']
+target = 'overall_rating'
 
-#standardizer = StandardScaler()
-#X_std = standardizer.fit_transform(X)
+# Extract features and target variable
+X = data[player_features].copy()
+y = data[target].copy()
 
-from sklearn.neighbors import KNeighborsClassifier
+# Clean the data by removing rows with missing values
+X.dropna(inplace=True)
+y = y.loc[X.index]
 
-knn = KNeighborsClassifier(n_neighbors=5, n_jobs=-1).fit(X, Y)
-#new = None
-#knn.predict(new)
-#Converting words to integer values
-#def convert_to_int(word):
- #   word_dict = {'one':1, 'two':2, 'three':3, 'four':4, 'five':5, 'six':6, 'seven':7, 'eight':8,
-  #              'nine':9, 'ten':10, 'eleven':11, 'twelve':12, 'zero':0, 0: 0}
-   # return word_dict[word]
+# Perform data scaling
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
 
-#X['W'] = X['W'].apply(lambda x : convert_to_int(x))
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.2, random_state=42)
 
-#y = dataset.columns["W"]
+# Initialize RandomForestRegressor and fit the model
+clf = RandomForestRegressor(random_state=42)
+clf.fit(X_train, y_train)
 
-#Splitting Training and Test Set
-#Since we have a very small dataset, we will train our model with all availabe data.
+# Evaluate the model on the testing set
+score = clf.score(X_test, y_test)
 
-#from sklearn.linear_model import LinearRegression
-#regressor = LinearRegression()
+#print("R-Squared Score:", score)
 
-#Fitting model with trainig data
-#regressor.fit(X, Y)
-
-# Saving model to disk
-#pickle.dump(KNeighborsClassifier, open('model.pkl','wb'))
-
-# Loading model to compare the results
-#model = pickle.load(open('model.pkl','rb'))
-#new = [[2.89,1.97,3.25,1.0666]]
-
-#nm =knn.predict(new)
-#print(nm)  
-pickle.dump(knn, open('model.pkl','wb'))
-model = pickle.load(open('model.pkl','rb'))
+# Save the trained model to disk
+pickle.dump(clf, open('model.pkl', 'wb'))
